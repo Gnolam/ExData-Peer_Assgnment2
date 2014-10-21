@@ -17,7 +17,7 @@ library(gridExtra)
 filtered_Coal_Combusion <- SCC[grepl("Fuel Comb.*Coal", SCC$EI.Sector),]$SCC
 NEI_Col_Comb <- NEI[NEI$SCC %in% filtered_Coal_Combusion,]
 
-
+# Left plot
 ggp <- ggplot(
             NEI_Col_Comb,
             aes(factor(year),
@@ -27,9 +27,11 @@ ggp <- ggplot(
   labs(x="year", y=expression("Total PM"[2.5]*" Emission (000' tons)"))
 
 
-
+# Right plot
 pp <- qplot(year, Emissions, data=combustionNEI, geom=c("smooth"), method="lm", ylab=expression("Average amt. of PM"[2.5]*" emitted, in tons"))
 
+
+# join plot
 grid_ggp_n_pp <- grid.arrange(ggp, pp, ncol=2, main = "PM2.5 Coal Combustion Source Emissions Across US from 1999-2008")
 
 dev.copy(png, file="plot4.png", height=480, width=480, bg="transparent")
